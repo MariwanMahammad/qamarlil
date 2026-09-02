@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستەمی مۆڵەتی کارمەندەکان - قمر ليل</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-main-title">نووسینگەی قمر ليل</h1>
+            <p class="splash-sub-title">بۆ مۆڵەتی کارمەندەکان</p>
+        </div>
+    </div>
+
+    <div id="loginView" class="login-wrapper hidden">
+        <div class="card auth-card">
+            
+            <div class="brand-header">
+                <h2 class="brand-title-text">نووسینگەی قمر ليل</h2>
+                <p class="brand-subtitle">سیستەمی مۆڵەتی کارمەندەکان</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">ناوی بەکارهێنەر (ئیمێڵ):</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔑</span>
+                        <input type="email" id="loginEmail" autocomplete="email" placeholder="admin@qamarlil.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">وشەی نهێنی:</label>
+                    <div class="input-with-icon">
+                        <span class="input-icon">🔑</span>
+                        <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="loginBtn" class="btn primary-btn">چوونەژوورەوە</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="mainDashboard" class="hidden">
+        <header class="navbar">
+            <div class="nav-title">
+                <h1>سیستەمی مۆڵەتی کارمەندەکان - قمر ليل</h1>
+                <span id="userRoleWelcome" class="welcome-text">بەخێرهاتیت</span>
+            </div>
+            <button id="logoutBtn" class="btn danger-btn">چوونەدەرەوە</button>
+        </header>
+
+        <main class="main-content">
+            
+            <div id="adminSection" class="hidden">
+                <div class="card admin-card">
+                    <h3>زیادکردنی کارمەندی نوێ</h3>
+                    <div class="form-row">
+                        <input type="email" id="newEmpEmail" placeholder="ئیمێڵی کارمەند">
+                        <input type="password" id="newEmpPassword" placeholder="وشەی نهێنی کارمەند">
+                        <button id="createEmployeeBtn" class="btn primary-btn">تۆمارکردن</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>داواکارییە چاوەڕوانکراوەکانی کارمەندان</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ناوی کارمەند</th>
+                                    <th>جۆر</th>
+                                    <th>ماوە / کات</th>
+                                    <th>بەروار</th>
+                                    <th>هۆکار</th>
+                                    <th>کردارەکان</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminRequestsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="employeeSection" class="hidden">
+                <div class="card">
+                    <h3>داواکردنی مۆڵەتی نوێ</h3>
+                    
+                    <div class="form-group">
+                        <label>جۆری مۆڵەت:</label>
+                        <select id="empLeaveCategory" onchange="toggleEmpFields()">
+                            <option value="زەمەنی">زەمەنی (بە سەعات)</option>
+                            <option value="ڕۆژانە">ڕۆژانە (بە ڕۆژ)</option>
+                        </select>
+                    </div>
+
+                    <div id="empHourlyGroup" class="form-row">
+                        <div class="form-group">
+                            <label>لە سەعات:</label>
+                            <input type="time" id="empStartTime">
+                        </div>
+                        <div class="form-group">
+                            <label>بۆ سەعات:</label>
+                            <input type="time" id="empEndTime">
+                        </div>
+                    </div>
+
+                    <div id="empDailyGroup" class="form-group hidden">
+                        <label>چەند ڕۆژ:</label>
+                        <input type="number" id="empLeaveDays" min="1" value="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>بەروار:</label>
+                        <input type="date" id="empLeaveDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label>هۆکار:</label>
+                        <textarea id="empLeaveReason" placeholder="هۆکاری داواکردنی مۆڵەت بنووسە..."></textarea>
+                    </div>
+
+                    <button id="submitLeaveBtn" class="btn primary-btn">ناردنی داواکاری</button>
+                </div>
+
+                <div class="card">
+                    <h3>مۆڵەتەکانی من</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>جۆر</th>
+                                    <th>ماوە / کات</th>
+                                    <th>بەروار</th>
+                                    <th>هۆکار</th>
+                                    <th>دۆخ</th>
+                                    <th>تێبینی ئەدمین</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myRequestsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                const loginView = document.getElementById('loginView');
+                if(splash) splash.style.display = 'none';
+                if(loginView) loginView.classList.remove('hidden');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
